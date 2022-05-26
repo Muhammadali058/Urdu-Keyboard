@@ -2,15 +2,20 @@ package com.braincoder.bckeyboard;
 
 import static android.view.inputmethod.InputConnection.CURSOR_UPDATE_MONITOR;
 
+import android.annotation.SuppressLint;
 import android.inputmethodservice.InputMethodService;
 import android.inputmethodservice.Keyboard;
 import android.inputmethodservice.KeyboardView;
 import android.media.AudioManager;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.CursorAnchorInfo;
 import android.view.inputmethod.InputConnection;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class MyKeyboard extends InputMethodService implements KeyboardView.OnKeyboardActionListener {
@@ -19,7 +24,8 @@ public class MyKeyboard extends InputMethodService implements KeyboardView.OnKey
     private Keyboard keyboard;
 
     private boolean caps = false;
-    EditText editText;
+    private TextView editText;
+    int selection = 0;
 
     @Override
     public View onCreateInputView() {
@@ -35,20 +41,24 @@ public class MyKeyboard extends InputMethodService implements KeyboardView.OnKey
         FontsOverride.setDefaultFont(this, "SANS_SERIF", "fonts/urdu_font.ttf");
         FontsOverride.setDefaultFont(this, "SERIF", "fonts/urdu_font.ttf");
 
+
         return kv;
     }
 
+    @SuppressLint("ResourceAsColor")
     @Override
     public View onCreateCandidatesView() {
         View view = getLayoutInflater().inflate(R.layout.demo_layout, null);
         setCandidatesViewShown(true);
+        setCandidatesView(view);
 
         editText = view.findViewById(R.id.textView);
-        Button okBtn = view.findViewById(R.id.okBtn);
+        ImageView okBtn = view.findViewById(R.id.okBtn);
+
         okBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                editText.setText("Hello");
+                editText.setText("");
             }
         });
 
@@ -58,9 +68,9 @@ public class MyKeyboard extends InputMethodService implements KeyboardView.OnKey
     @Override
     public void onComputeInsets(Insets outInsets) {
         super.onComputeInsets(outInsets);
-        if (!isFullscreenMode()) {
-            outInsets.contentTopInsets = outInsets.visibleTopInsets;
-        }
+//        if (!isFullscreenMode()) {
+//            outInsets.contentTopInsets = outInsets.visibleTopInsets;
+//        }
     }
 
     private void playClick(int keyCode){
@@ -87,6 +97,17 @@ public class MyKeyboard extends InputMethodService implements KeyboardView.OnKey
         switch(primaryCode){
             case Keyboard.KEYCODE_DELETE :
                 ic.deleteSurroundingText(1, 0);
+
+                try {
+                    String text = editText.getText().toString();
+                    if(text.length() > 0 && selection > 0) {
+                        String newText = text.substring(0, selection - 1) + text.substring(selection);
+                        editText.setText(newText);
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+
                 break;
             case Keyboard.KEYCODE_SHIFT:
                 caps = !caps;
@@ -104,10 +125,15 @@ public class MyKeyboard extends InputMethodService implements KeyboardView.OnKey
 
                 ic.commitText(String.valueOf(code),1);
 
-                boolean b = ic.requestCursorUpdates(CURSOR_UPDATE_MONITOR);
+                ic.requestCursorUpdates(CURSOR_UPDATE_MONITOR);
 
                 editText.setText(editText.getText().toString() + String.valueOf(code));
         }
+    }
+
+    @Override
+    public void onUpdateCursorAnchorInfo(CursorAnchorInfo cursorAnchorInfo) {
+        selection = cursorAnchorInfo.getSelectionStart();
     }
 
     @Override

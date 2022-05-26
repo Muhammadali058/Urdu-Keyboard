@@ -20,8 +20,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-                Intent settings = new Intent(Settings.ACTION_INPUT_METHOD_SETTINGS);
-                startActivity(settings);
+
+//        Intent settings = new Intent(Settings.ACTION_INPUT_METHOD_SETTINGS);
+//        startActivity(settings);
+
         init();
     }
 
@@ -32,8 +34,8 @@ public class MainActivity extends AppCompatActivity {
 //                Intent settings = new Intent(Settings.ACTION_INPUT_METHOD_SETTINGS);
 //                startActivity(settings);
 
-//                InputMethodManager imeManager = (InputMethodManager) getApplicationContext().getSystemService(INPUT_METHOD_SERVICE);
-//                imeManager.showInputMethodPicker();
+                InputMethodManager imeManager = (InputMethodManager) getApplicationContext().getSystemService(INPUT_METHOD_SERVICE);
+                imeManager.showInputMethodPicker();
 
 //                char c = binding.source.getText().charAt(0);
 //                Log.i("Characted = ", String.valueOf((int) c));
