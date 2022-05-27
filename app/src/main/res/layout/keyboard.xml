@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.inputmethodservice.KeyboardView
+<com.braincoder.bckeyboard.MyKeyboardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/keyboard"
     android:layout_width="match_parent"
@@ -14,7 +14,10 @@
     android:keyPreviewOffset="12dp"
     android:visibility="visible"
 
-    android:background="@color/keyboard_background_color"
+    android:keyTextSize="20sp"
+    android:popupLayout="@layout/popup_layout"
+    android:background="@color/keyboard_bg_color"
     android:layout_alignParentBottom="true"
     android:keyBackground="@drawable/key_background"
+    android:keyTextColor="@color/black"
     android:keyPreviewLayout ="@layout/preview"/>

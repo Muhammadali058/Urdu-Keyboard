@@ -8,8 +8,15 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <color name="keyboard_background_color">#34495e</color>
-    <color name="keyboard_divider">#2c3e50</color>
-    <color name="keyboard_pressed">#95a5a6</color>
+<!--    <color name="keyboard_background_color">#34495e</color>-->
+<!--    <color name="keyboard_divider">#2c3e50</color>-->
+<!--    <color name="keyboard_pressed">#95a5a6</color>-->
+
+    <color name="keyboard_bg_color">#E8EAED</color>
+    <color name="keyboard_key_bg_color">#FFFFFF</color>
+    <color name="gray">#CCCED5</color>
+    <color name="keyboard_icon_color">#444446</color>
+    <color name="keyboard_pressed_color">#CCCED5</color>
+    <color name="blue">#1A73E8</color>
 
 </resources>

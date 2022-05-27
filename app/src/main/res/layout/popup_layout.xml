@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <com.braincoder.bckeyboard.MyKeyboardView
+        android:id="@android:id/keyboardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:keyBackground="@drawable/key_background"
+        android:keyPreviewLayout="@layout/preview"
+        android:keyTextColor="@color/black"
+        android:keyTextSize="18dp"
+        android:popupLayout="@layout/popup_layout"
+        android:shadowColor="@color/white"
+        tools:ignore="ResourceCycle" />
+
+</LinearLayout>

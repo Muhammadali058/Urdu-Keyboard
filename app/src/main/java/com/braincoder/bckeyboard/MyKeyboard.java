@@ -20,7 +20,8 @@ import android.widget.Toast;
 
 public class MyKeyboard extends InputMethodService implements KeyboardView.OnKeyboardActionListener {
 
-    private KeyboardView kv;
+//    private KeyboardView kv;
+    private MyKeyboardView kv;
     private Keyboard keyboard;
 
     private boolean caps = false;
@@ -29,10 +30,10 @@ public class MyKeyboard extends InputMethodService implements KeyboardView.OnKey
 
     @Override
     public View onCreateInputView() {
-        kv = (KeyboardView)getLayoutInflater().inflate(R.layout.keyboard, null);
+        kv = (MyKeyboardView)getLayoutInflater().inflate(R.layout.keyboard, null);
         keyboard = new Keyboard(this, R.xml.qwerty);
         kv.setKeyboard(keyboard);
-        kv.setPreviewEnabled(false);
+        kv.setPreviewEnabled(true);
         kv.setOnKeyboardActionListener(this);
 
         FontsOverride.setDefaultFont(this, "DEFAULT", "fonts/urdu_font.ttf");
@@ -93,7 +94,8 @@ public class MyKeyboard extends InputMethodService implements KeyboardView.OnKey
     @Override
     public void onKey(int primaryCode, int[] keyCodes) {
         InputConnection ic = getCurrentInputConnection();
-        playClick(primaryCode);
+//        playClick(primaryCode);
+
         switch(primaryCode){
             case Keyboard.KEYCODE_DELETE :
                 ic.deleteSurroundingText(1, 0);
@@ -138,6 +140,17 @@ public class MyKeyboard extends InputMethodService implements KeyboardView.OnKey
 
     @Override
     public void onPress(int primaryCode) {
+    }
+
+    @Override
+    public boolean onKeyLongPress(int keyCode, KeyEvent event) {
+        Log.i("OnLongPress = ", keyCode +"");
+        char c = 'w';
+        if(keyCode == (int)c ){
+            onKey((int)'1', null);
+        }
+        return true;
+
     }
 
     @Override
