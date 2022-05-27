@@ -11,6 +11,7 @@ import android.inputmethodservice.KeyboardView;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -29,46 +30,61 @@ public class MyKeyboardView extends KeyboardView {
 
         Paint paint = new Paint();
         paint.setTextAlign(Paint.Align.CENTER);
-        paint.setTextSize(25);
-        paint.setColor(Color.RED);
+        paint.setTextSize(28);
+        paint.setColor(getResources().getColor(R.color.keyboard_key_text_color));
 
         List<Keyboard.Key> keys = getKeyboard().getKeys();
         for(Keyboard.Key key: keys) {
-            if(key.label != null)
-                canvas.drawText(key.label.toString(), key.x + (key.width/2) + 20, key.y + 50, paint);
+            if(key.label != null){
+                if(key.label.toString().equalsIgnoreCase("q"))
+                    canvas.drawText("1", key.x + (key.width/2) + 25, key.y + 60, paint);
 
-            if(key.codes[0] == -1){
-                Drawable dr = (Drawable) getResources().getDrawable(R.drawable.pressed);
-                dr.setBounds(key.x, key.y, key.x + key.width, key.y + key.height);
-                dr.draw(canvas);
+                if(key.label.toString().equalsIgnoreCase("w"))
+                    canvas.drawText("2", key.x + (key.width/2) + 25, key.y + 60, paint);
 
-                if (key.icon != null) {
-                    key.icon.setBounds(key.x, key.y, key.x + key.width - 50, key.y + key.height - 50);
-                    key.icon.draw(canvas);
-                }
+                if(key.label.toString().equalsIgnoreCase("e"))
+                    canvas.drawText("3", key.x + (key.width/2) + 25, key.y + 60, paint);
+
+                if(key.label.toString().equalsIgnoreCase("r"))
+                    canvas.drawText("4", key.x + (key.width/2) + 25, key.y + 60, paint);
+
+                if(key.label.toString().equalsIgnoreCase("t"))
+                    canvas.drawText("5", key.x + (key.width/2) + 25, key.y + 60, paint);
+
+                if(key.label.toString().equalsIgnoreCase("y"))
+                    canvas.drawText("6", key.x + (key.width/2) + 25, key.y + 60, paint);
+
+                if(key.label.toString().equalsIgnoreCase("u"))
+                    canvas.drawText("7", key.x + (key.width/2) + 25, key.y + 60, paint);
+
+                if(key.label.toString().equalsIgnoreCase("i"))
+                    canvas.drawText("8", key.x + (key.width/2) + 25, key.y + 60, paint);
+
+                if(key.label.toString().equalsIgnoreCase("o"))
+                    canvas.drawText("9", key.x + (key.width/2) + 25, key.y + 60, paint);
+
+                if(key.label.toString().equalsIgnoreCase("p"))
+                    canvas.drawText("0", key.x + (key.width/2) + 25, key.y + 60, paint);
             }
+
+
+//            if(key.codes[0] == MyKeyboard.KEYCODE_SHIFT){
+//                Drawable dr = (Drawable) getResources().getDrawable(R.drawable.key_background_gray);
+//                dr.setBounds(key.x, key.y + 13, key.x + key.width, key.y + key.height + 14);
+//                dr.draw(canvas);
+//
+//                if (key.icon != null) {
+//                    key.icon = getResources().getDrawable(R.drawable.ic_keyboard_capslock);
+//                    key.icon.setBounds(key.x, key.y + 20, key.x + key.width, key.y + key.height);
+//                    key.icon.draw(canvas);
+//                }
+//            }
         }
     }
 
-//    private Keyboard.Key longPressedKey = null;
-//    @Override
-//    protected boolean onLongPress(Keyboard.Key key) {
-////        char c = 'w';
-////        if(key.codes[0] == (int)c ){
-////            getOnKeyboardActionListener().onKey((int)'2', null);
-////        }
-////        return super.onLongPress(key);
-//
-//        if (key.popupCharacters != null && key.popupCharacters.length() > 0)
-//            longPressedKey = key;
-//        return super.onLongPress(key);
-//    }
+    public void method(){
 
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        return super.onTouchEvent(event);
     }
-
 
     MyKeyboardView mMiniKeyboard;
     private View mMiniKeyboardContainer;
@@ -76,6 +92,8 @@ public class MyKeyboardView extends KeyboardView {
     PopupWindow mPopupKeyboard;
     @Override
     protected boolean onLongPress(Keyboard.Key popupKey) {
+        Log.i("onLongPress = ", "" + popupKey.codes[0]);
+
         int popupKeyboardId = popupKey.popupResId;
 
         if (popupKeyboardId != 0) {
@@ -176,12 +194,12 @@ public class MyKeyboardView extends KeyboardView {
 
             mPopupKeyboard.setWidth(mMiniKeyboardContainer.getMeasuredWidth());
             mPopupKeyboard.setHeight(mMiniKeyboardContainer.getMeasuredHeight());
-            mPopupKeyboard.showAtLocation(this, Gravity.NO_GRAVITY, x, y);
+//            mPopupKeyboard.showAtLocation(this, Gravity.NO_GRAVITY, x, y);
 
             invalidateAllKeys();
 
-//            char c = popupKey.popupCharacters.charAt(1);
-//            getOnKeyboardActionListener().onKey((int) c,null);
+            char c = popupKey.popupCharacters.charAt(0);
+            getOnKeyboardActionListener().onKey((int) c,null);
 
             return true;
         }

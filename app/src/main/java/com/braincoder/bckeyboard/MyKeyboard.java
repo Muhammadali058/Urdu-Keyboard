@@ -20,11 +20,17 @@ import android.widget.Toast;
 
 public class MyKeyboard extends InputMethodService implements KeyboardView.OnKeyboardActionListener {
 
-//    private KeyboardView kv;
     private MyKeyboardView kv;
     private Keyboard keyboard;
 
-    private boolean caps = false;
+    private boolean isShift = false;
+    private boolean isCaps = false;
+    public final static int KEYCODE_SHIFT = -1;
+    public final static int KEYCODE_CAPS = -2;
+    public final static int KEYCODE_DELETE = -3;
+    public final static int KEYCODE_ALPHABET = -100;
+    public final static int KEYCODE_NUMERIC = -101;
+    public final static int KEYCODE_SYMBOLS = -102;
     private TextView editText;
     int selection = 0;
 
@@ -33,15 +39,8 @@ public class MyKeyboard extends InputMethodService implements KeyboardView.OnKey
         kv = (MyKeyboardView)getLayoutInflater().inflate(R.layout.keyboard, null);
         keyboard = new Keyboard(this, R.xml.qwerty);
         kv.setKeyboard(keyboard);
-        kv.setPreviewEnabled(true);
+        kv.setPreviewEnabled(false);
         kv.setOnKeyboardActionListener(this);
-
-        FontsOverride.setDefaultFont(this, "DEFAULT", "fonts/urdu_font.ttf");
-        FontsOverride.setDefaultFont(this, "MONOSPACE", "fonts/urdu_font.ttf");
-        FontsOverride.setDefaultFont(this, "DEFAULT_BOLD", "fonts/urdu_font.ttf");
-        FontsOverride.setDefaultFont(this, "SANS_SERIF", "fonts/urdu_font.ttf");
-        FontsOverride.setDefaultFont(this, "SERIF", "fonts/urdu_font.ttf");
-
 
         return kv;
     }
@@ -91,37 +90,75 @@ public class MyKeyboard extends InputMethodService implements KeyboardView.OnKey
         }
     }
 
+    private void switchKeyboard(InputConnection ic, int keyCode){
+        switch (keyCode){
+            case KEYCODE_NUMERIC:
+                keyboard = new Keyboard(this, R.xml.n_qwerty);
+                kv.setKeyboard(keyboard);
+                kv.setOnKeyboardActionListener(this);
+                break;
+            case KEYCODE_ALPHABET:
+                keyboard = new Keyboard(this, R.xml.qwerty);
+                kv.setKeyboard(keyboard);
+                kv.setOnKeyboardActionListener(this);
+                break;
+        }
+    }
+
     @Override
     public void onKey(int primaryCode, int[] keyCodes) {
         InputConnection ic = getCurrentInputConnection();
 //        playClick(primaryCode);
 
         switch(primaryCode){
-            case Keyboard.KEYCODE_DELETE :
+            case -5:
+                return;
+
+            case KEYCODE_ALPHABET:
+            case KEYCODE_NUMERIC:
+            case KEYCODE_SYMBOLS:
+                switchKeyboard(ic, primaryCode);
+                return;
+
+            case KEYCODE_DELETE :
                 ic.deleteSurroundingText(1, 0);
 
-                try {
-                    String text = editText.getText().toString();
-                    if(text.length() > 0 && selection > 0) {
-                        String newText = text.substring(0, selection - 1) + text.substring(selection);
-                        editText.setText(newText);
-                    }
-                }catch (Exception e){
-                    e.printStackTrace();
+//                try {
+//                    String text = editText.getText().toString();
+//                    if(text.length() > 0 && selection > 0) {
+//                        String newText = text.substring(0, selection - 1) + text.substring(selection);
+//                        editText.setText(newText);
+//                    }
+//                }catch (Exception e){
+//                    e.printStackTrace();
+//                }
+                break;
+            case KEYCODE_SHIFT:
+                if(isCaps){
+                    isShift = false;
+                    isCaps = false;
+                    keyboard.setShifted(false);
+                    kv.invalidateAllKeys();
+                }else {
+                    isShift = !isShift;
+                    keyboard.setShifted(isShift);
+                    kv.invalidateAllKeys();
                 }
 
-                break;
-            case Keyboard.KEYCODE_SHIFT:
-                caps = !caps;
-                keyboard.setShifted(caps);
+                kv.method();
+                return;
+            case KEYCODE_CAPS:
+                isCaps = !isCaps;
+                isShift = false;
+                keyboard.setShifted(isCaps);
                 kv.invalidateAllKeys();
-                break;
+                return;
             case Keyboard.KEYCODE_DONE:
                 ic.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_ENTER));
                 break;
             default:
                 char code = (char)primaryCode;
-                if(Character.isLetter(code) && caps){
+                if(Character.isLetter(code) && (isCaps || isShift)){
                     code = Character.toUpperCase(code);
                 }
 
@@ -130,6 +167,12 @@ public class MyKeyboard extends InputMethodService implements KeyboardView.OnKey
                 ic.requestCursorUpdates(CURSOR_UPDATE_MONITOR);
 
                 editText.setText(editText.getText().toString() + String.valueOf(code));
+        }
+
+        if(isShift){
+            isShift = false;
+            keyboard.setShifted(isShift);
+            kv.invalidateAllKeys();
         }
     }
 

@@ -19,5 +19,5 @@
     android:background="@color/keyboard_bg_color"
     android:layout_alignParentBottom="true"
     android:keyBackground="@drawable/key_background"
-    android:keyTextColor="@color/black"
+    android:keyTextColor="@color/keyboard_key_text_color"
     android:keyPreviewLayout ="@layout/preview"/>
