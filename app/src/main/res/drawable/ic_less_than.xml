@@ -1,0 +1,5 @@
+<vector android:height="12dp" android:viewportHeight="512"
+    android:viewportWidth="512" android:width="12dp" xmlns:android="http://schemas.android.com/apk/res/android">
+    <path android:fillColor="@color/keyboard_icon_color"
+        android:pathData="M249.2,137.4c-162,81 -211.5,106.2 -213.5,108.5 -4.8,5.7 -4.8,14.5 0,20.2 2,2.3 51.5,27.5 213.5,108.5 186.9,93.4 211.3,105.4 215.4,105.4 14.9,-0 21.7,-17.3 10.6,-27.1 -2.4,-2.2 -75,-38.9 -197,-99.9 -106.3,-53.1 -193.2,-96.7 -193.2,-97 0,-0.3 86.9,-43.9 193.2,-97 106.2,-53.1 194.4,-97.6 196,-98.9 8.6,-7.1 7.6,-19.3 -2.1,-25.8 -7.6,-5.1 7.3,-12 -222.9,103.1z" android:strokeColor="#00000000"/>
+</vector>

@@ -92,8 +92,6 @@ public class MyKeyboardView extends KeyboardView {
     PopupWindow mPopupKeyboard;
     @Override
     protected boolean onLongPress(Keyboard.Key popupKey) {
-        Log.i("onLongPress = ", "" + popupKey.codes[0]);
-
         int popupKeyboardId = popupKey.popupResId;
 
         if (popupKeyboardId != 0) {
@@ -194,12 +192,14 @@ public class MyKeyboardView extends KeyboardView {
 
             mPopupKeyboard.setWidth(mMiniKeyboardContainer.getMeasuredWidth());
             mPopupKeyboard.setHeight(mMiniKeyboardContainer.getMeasuredHeight());
-//            mPopupKeyboard.showAtLocation(this, Gravity.NO_GRAVITY, x, y);
 
-            invalidateAllKeys();
-
-            char c = popupKey.popupCharacters.charAt(0);
-            getOnKeyboardActionListener().onKey((int) c,null);
+            if(popupKey.codes[0] == 46 || popupKey.codes[0] == 1748){
+                mPopupKeyboard.showAtLocation(this, Gravity.NO_GRAVITY, x, y);
+                invalidateAllKeys();
+            }else {
+                char c = popupKey.popupCharacters.charAt(0);
+                getOnKeyboardActionListener().onKey((int) c, null);
+            }
 
             return true;
         }

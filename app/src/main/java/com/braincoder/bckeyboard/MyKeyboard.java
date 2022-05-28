@@ -30,7 +30,7 @@ public class MyKeyboard extends InputMethodService implements KeyboardView.OnKey
     public final static int KEYCODE_DELETE = -3;
     public final static int KEYCODE_ALPHABET = -100;
     public final static int KEYCODE_NUMERIC = -101;
-    public final static int KEYCODE_SYMBOLS = -102;
+    public final static int KEYCODE_URDU = -102;
     private TextView editText;
     int selection = 0;
 
@@ -92,13 +92,18 @@ public class MyKeyboard extends InputMethodService implements KeyboardView.OnKey
 
     private void switchKeyboard(InputConnection ic, int keyCode){
         switch (keyCode){
-            case KEYCODE_NUMERIC:
-                keyboard = new Keyboard(this, R.xml.n_qwerty);
+            case KEYCODE_ALPHABET:
+                keyboard = new Keyboard(this, R.xml.qwerty);
                 kv.setKeyboard(keyboard);
                 kv.setOnKeyboardActionListener(this);
                 break;
-            case KEYCODE_ALPHABET:
-                keyboard = new Keyboard(this, R.xml.qwerty);
+            case KEYCODE_NUMERIC:
+                keyboard = new Keyboard(this, R.xml.number);
+                kv.setKeyboard(keyboard);
+                kv.setOnKeyboardActionListener(this);
+                break;
+            case KEYCODE_URDU:
+                keyboard = new Keyboard(this, R.xml.urdu);
                 kv.setKeyboard(keyboard);
                 kv.setOnKeyboardActionListener(this);
                 break;
@@ -116,7 +121,7 @@ public class MyKeyboard extends InputMethodService implements KeyboardView.OnKey
 
             case KEYCODE_ALPHABET:
             case KEYCODE_NUMERIC:
-            case KEYCODE_SYMBOLS:
+            case KEYCODE_URDU:
                 switchKeyboard(ic, primaryCode);
                 return;
 

@@ -23,10 +23,16 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-//        Intent settings = new Intent(Settings.ACTION_INPUT_METHOD_SETTINGS);
-//        startActivity(settings);
-
         init();
+
+//        String characters = "اآبپتٹثجچح";
+//        String characters = "خدڈذرڑزژسش";
+//        String characters = "سضطظعغفقکگ";
+//        String characters = "لمنوہھءیے";
+        String characters = ",";
+        for (char c : characters.toCharArray()){
+            Log.i(c + " = ", String.valueOf((int) c));
+        }
     }
 
     private void init(){
