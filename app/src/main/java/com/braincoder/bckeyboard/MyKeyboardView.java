@@ -36,6 +36,20 @@ public class MyKeyboardView extends KeyboardView {
         List<Keyboard.Key> keys = getKeyboard().getKeys();
         for(Keyboard.Key key: keys) {
             if(key.label != null){
+
+//            if(key.codes[0] == 103){
+//                Drawable dr = (Drawable) getResources().getDrawable(R.color.black);
+//                dr.setBounds(key.x, key.y, key.x + key.width, key.y + key.height);
+//                dr.draw(canvas);
+//
+//                if (key.icon != null) {
+//                    key.icon = getResources().getDrawable(R.drawable.ic_keyboard_capslock);
+//                    key.icon.setBounds(key.x, key.y + 20, key.x + key.width, key.y + key.height);
+//                    key.icon.draw(canvas);
+//                }
+//            }
+
+
                 if(key.label.toString().equalsIgnoreCase("q"))
                     canvas.drawText("1", key.x + (key.width/2) + 25, key.y + 60, paint);
 
@@ -65,20 +79,9 @@ public class MyKeyboardView extends KeyboardView {
 
                 if(key.label.toString().equalsIgnoreCase("p"))
                     canvas.drawText("0", key.x + (key.width/2) + 25, key.y + 60, paint);
+                if(key.label.toString().equalsIgnoreCase("ا"))
+                    canvas.drawText("آ", key.x + (key.width/2) + 20, key.y + 65, paint);
             }
-
-
-//            if(key.codes[0] == MyKeyboard.KEYCODE_SHIFT){
-//                Drawable dr = (Drawable) getResources().getDrawable(R.drawable.key_background_gray);
-//                dr.setBounds(key.x, key.y + 13, key.x + key.width, key.y + key.height + 14);
-//                dr.draw(canvas);
-//
-//                if (key.icon != null) {
-//                    key.icon = getResources().getDrawable(R.drawable.ic_keyboard_capslock);
-//                    key.icon.setBounds(key.x, key.y + 20, key.x + key.width, key.y + key.height);
-//                    key.icon.draw(canvas);
-//                }
-//            }
         }
     }
 
@@ -114,6 +117,7 @@ public class MyKeyboardView extends KeyboardView {
             if (mMiniKeyboardContainer == null) {
                 mMiniKeyboardContainer = LayoutInflater.from(getContext()).inflate(R.layout.popup_layout, null);
                 mMiniKeyboard = (MyKeyboardView) mMiniKeyboardContainer.findViewById(android.R.id.keyboardView);
+                mMiniKeyboard.setPreviewEnabled(false);
 
                 if (mWindowOffset == null) {
                     mWindowOffset = new int[2];

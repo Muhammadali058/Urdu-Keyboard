@@ -37,7 +37,7 @@ public class MyKeyboard extends InputMethodService implements KeyboardView.OnKey
     @Override
     public View onCreateInputView() {
         kv = (MyKeyboardView)getLayoutInflater().inflate(R.layout.keyboard, null);
-        keyboard = new Keyboard(this, R.xml.qwerty);
+        keyboard = new Keyboard(this, R.xml.urdu);
         kv.setKeyboard(keyboard);
         kv.setPreviewEnabled(false);
         kv.setOnKeyboardActionListener(this);
@@ -63,14 +63,6 @@ public class MyKeyboard extends InputMethodService implements KeyboardView.OnKey
         });
 
         return view;
-    }
-
-    @Override
-    public void onComputeInsets(Insets outInsets) {
-        super.onComputeInsets(outInsets);
-//        if (!isFullscreenMode()) {
-//            outInsets.contentTopInsets = outInsets.visibleTopInsets;
-//        }
     }
 
     private void playClick(int keyCode){

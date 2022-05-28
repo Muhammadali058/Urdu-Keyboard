@@ -25,14 +25,10 @@ public class MainActivity extends AppCompatActivity {
 
         init();
 
-//        String characters = "اآبپتٹثجچح";
-//        String characters = "خدڈذرڑزژسش";
-//        String characters = "سضطظعغفقکگ";
-//        String characters = "لمنوہھءیے";
-        String characters = ",";
-        for (char c : characters.toCharArray()){
-            Log.i(c + " = ", String.valueOf((int) c));
-        }
+//        String characters = "abc";
+//        for (char c : characters.toCharArray()){
+//            Log.i(c + " = ", String.valueOf((int) c));
+//        }
     }
 
     private void init(){
@@ -44,10 +40,6 @@ public class MainActivity extends AppCompatActivity {
 
                 InputMethodManager imeManager = (InputMethodManager) getApplicationContext().getSystemService(INPUT_METHOD_SERVICE);
                 imeManager.showInputMethodPicker();
-
-//                char c = binding.source.getText().charAt(0);
-//                Log.i("Characted = ", String.valueOf((int) c));
-//                Toast.makeText(MainActivity.this, c + "", Toast.LENGTH_SHORT).show();
             }
         });
 

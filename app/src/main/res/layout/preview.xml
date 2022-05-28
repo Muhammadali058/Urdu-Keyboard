@@ -5,6 +5,5 @@
     android:background="@color/white"
     android:elevation="5dp"
     android:gravity="center"
-    android:shadowColor="@color/gray"
     android:textSize="17dp">
 </TextView>

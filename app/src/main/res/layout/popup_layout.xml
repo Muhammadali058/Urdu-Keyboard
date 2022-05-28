@@ -10,11 +10,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/keyboard_bg_color"
-        android:keyBackground="@drawable/key_background"
-        android:keyTextColor="@color/keyboard_key_text_color"
+        android:keyBackground="@drawable/key_background_popup"
+        android:keyTextColor="@color/keyboard_bg_color"
         android:keyTextSize="18dp"
         android:popupLayout="@layout/popup_layout"
-        android:shadowColor="@color/white"
         tools:ignore="ResourceCycle" />
 
 </LinearLayout>
