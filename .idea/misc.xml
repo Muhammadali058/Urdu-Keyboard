@@ -25,6 +25,7 @@
         <entry key="..\:/Users/HP/Documents/AndroidStudioProjects/BCKeyboard/app/src/main/res/xml/method.xml" value="0.18981481481481483" />
         <entry key="..\:/Users/HP/Documents/AndroidStudioProjects/BCKeyboard/app/src/main/res/xml/qwerty.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/OK/Documents/AndroidStudioProjects/BC Keyboard/app/src/main/res/drawable/ic_clear.xml" value="0.169" />
+        <entry key="..\:/Users/OK/Documents/AndroidStudioProjects/BC Keyboard/app/src/main/res/drawable/ic_convert.xml" value="0.169" />
         <entry key="..\:/Users/OK/Documents/AndroidStudioProjects/BC Keyboard/app/src/main/res/drawable/ic_keyboard.xml" value="0.169" />
         <entry key="..\:/Users/OK/Documents/AndroidStudioProjects/BC Keyboard/app/src/main/res/drawable/ic_keyboard_capslock.xml" value="0.169" />
         <entry key="..\:/Users/OK/Documents/AndroidStudioProjects/BC Keyboard/app/src/main/res/drawable/ic_keyboard_delete.xml" value="0.169" />
@@ -38,6 +39,9 @@
         <entry key="..\:/Users/OK/Documents/AndroidStudioProjects/BC Keyboard/app/src/main/res/drawable/normal.xml" value="0.169" />
         <entry key="..\:/Users/OK/Documents/AndroidStudioProjects/BC Keyboard/app/src/main/res/drawable/pressed.xml" value="0.169" />
         <entry key="..\:/Users/OK/Documents/AndroidStudioProjects/BC Keyboard/app/src/main/res/drawable/special_key.xml" value="0.169" />
+        <entry key="..\:/Users/OK/Documents/AndroidStudioProjects/BC Keyboard/app/src/main/res/drawable/textbox_bg.xml" value="0.169" />
+        <entry key="..\:/Users/OK/Documents/AndroidStudioProjects/BC Keyboard/app/src/main/res/layout/activity_main.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/OK/Documents/AndroidStudioProjects/BC Keyboard/app/src/main/res/layout/candidate_layout.xml" value="0.25" />
         <entry key="..\:/Users/OK/Documents/AndroidStudioProjects/BC Keyboard/app/src/main/res/layout/demo_layout.xml" value="0.18802083333333333" />
         <entry key="..\:/Users/OK/Documents/AndroidStudioProjects/BC Keyboard/app/src/main/res/layout/keyboard.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/OK/Documents/AndroidStudioProjects/BC Keyboard/app/src/main/res/layout/popup_layout.xml" value="0.365625" />

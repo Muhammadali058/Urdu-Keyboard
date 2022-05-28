@@ -11,12 +11,11 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.CursorAnchorInfo;
+import android.view.inputmethod.ExtractedText;
+import android.view.inputmethod.ExtractedTextRequest;
 import android.view.inputmethod.InputConnection;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class MyKeyboard extends InputMethodService implements KeyboardView.OnKeyboardActionListener {
 
@@ -32,15 +31,18 @@ public class MyKeyboard extends InputMethodService implements KeyboardView.OnKey
     public final static int KEYCODE_NUMERIC = -101;
     public final static int KEYCODE_URDU = -102;
     private TextView editText;
-    int selection = 0;
 
     @Override
     public View onCreateInputView() {
         kv = (MyKeyboardView)getLayoutInflater().inflate(R.layout.keyboard, null);
-        keyboard = new Keyboard(this, R.xml.urdu);
+        keyboard = new Keyboard(this, R.xml.qwerty);
         kv.setKeyboard(keyboard);
         kv.setPreviewEnabled(false);
         kv.setOnKeyboardActionListener(this);
+
+        isShift = true;
+        keyboard.setShifted(isShift);
+        kv.invalidateAllKeys();
 
         return kv;
     }
@@ -48,17 +50,39 @@ public class MyKeyboard extends InputMethodService implements KeyboardView.OnKey
     @SuppressLint("ResourceAsColor")
     @Override
     public View onCreateCandidatesView() {
-        View view = getLayoutInflater().inflate(R.layout.demo_layout, null);
+        View view = getLayoutInflater().inflate(R.layout.candidate_layout, null);
         setCandidatesViewShown(true);
         setCandidatesView(view);
 
         editText = view.findViewById(R.id.textView);
-        ImageView okBtn = view.findViewById(R.id.okBtn);
+        ImageView clearBtn = view.findViewById(R.id.clearBtn);
+        ImageView convertBtn = view.findViewById(R.id.convertBtn);
 
-        okBtn.setOnClickListener(new View.OnClickListener() {
+        clearBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 editText.setText("");
+            }
+        });
+
+        convertBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                InputConnection ic = getCurrentInputConnection();
+
+                int selectionStart = 0;
+                int selectionEnd = 0;
+
+                if(ic.getTextBeforeCursor(1000, 0) != null)
+                    selectionStart = ic.getTextBeforeCursor(1000, 0).length();
+
+                if(ic.getTextAfterCursor(1000, 0) != null)
+                    selectionEnd = ic.getTextAfterCursor(1000, 0).length();
+
+                String text = editText.getText().toString();
+
+                ic.deleteSurroundingText(selectionStart, selectionEnd);
+                ic.commitText(text.toUpperCase(), text.length());
             }
         });
 
@@ -119,17 +143,8 @@ public class MyKeyboard extends InputMethodService implements KeyboardView.OnKey
 
             case KEYCODE_DELETE :
                 ic.deleteSurroundingText(1, 0);
-
-//                try {
-//                    String text = editText.getText().toString();
-//                    if(text.length() > 0 && selection > 0) {
-//                        String newText = text.substring(0, selection - 1) + text.substring(selection);
-//                        editText.setText(newText);
-//                    }
-//                }catch (Exception e){
-//                    e.printStackTrace();
-//                }
                 break;
+
             case KEYCODE_SHIFT:
                 if(isCaps){
                     isShift = false;
@@ -144,15 +159,18 @@ public class MyKeyboard extends InputMethodService implements KeyboardView.OnKey
 
                 kv.method();
                 return;
+
             case KEYCODE_CAPS:
                 isCaps = !isCaps;
                 isShift = false;
                 keyboard.setShifted(isCaps);
                 kv.invalidateAllKeys();
                 return;
+
             case Keyboard.KEYCODE_DONE:
                 ic.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_ENTER));
                 break;
+
             default:
                 char code = (char)primaryCode;
                 if(Character.isLetter(code) && (isCaps || isShift)){
@@ -160,10 +178,7 @@ public class MyKeyboard extends InputMethodService implements KeyboardView.OnKey
                 }
 
                 ic.commitText(String.valueOf(code),1);
-
                 ic.requestCursorUpdates(CURSOR_UPDATE_MONITOR);
-
-                editText.setText(editText.getText().toString() + String.valueOf(code));
         }
 
         if(isShift){
@@ -175,22 +190,22 @@ public class MyKeyboard extends InputMethodService implements KeyboardView.OnKey
 
     @Override
     public void onUpdateCursorAnchorInfo(CursorAnchorInfo cursorAnchorInfo) {
-        selection = cursorAnchorInfo.getSelectionStart();
+        InputConnection ic = getCurrentInputConnection();
+        String selectionStart = "";
+        String selectionEnd = "";
+
+        if(ic.getTextBeforeCursor(1000, 0) != null)
+            selectionStart = (String) ic.getTextBeforeCursor(1000, 0);
+
+        if(ic.getTextAfterCursor(1000, 0) != null)
+            selectionEnd = (String) ic.getTextAfterCursor(1000, 0);
+
+        String text = selectionStart + selectionEnd;
+        editText.setText(text);
     }
 
     @Override
     public void onPress(int primaryCode) {
-    }
-
-    @Override
-    public boolean onKeyLongPress(int keyCode, KeyEvent event) {
-        Log.i("OnLongPress = ", keyCode +"");
-        char c = 'w';
-        if(keyCode == (int)c ){
-            onKey((int)'1', null);
-        }
-        return true;
-
     }
 
     @Override
@@ -199,6 +214,7 @@ public class MyKeyboard extends InputMethodService implements KeyboardView.OnKey
 
     @Override
     public void onText(CharSequence text) {
+
     }
 
     @Override
