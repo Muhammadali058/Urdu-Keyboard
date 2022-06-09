@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
         init();
 
-//        String characters = "abc";
+//        String characters = "ں";
 //        for (char c : characters.toCharArray()){
 //            Log.i(c + " = ", String.valueOf((int) c));
 //        }

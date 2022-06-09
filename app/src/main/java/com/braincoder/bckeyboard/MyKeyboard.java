@@ -47,47 +47,47 @@ public class MyKeyboard extends InputMethodService implements KeyboardView.OnKey
         return kv;
     }
 
-    @SuppressLint("ResourceAsColor")
-    @Override
-    public View onCreateCandidatesView() {
-        View view = getLayoutInflater().inflate(R.layout.candidate_layout, null);
-        setCandidatesViewShown(true);
-        setCandidatesView(view);
-
-        editText = view.findViewById(R.id.textView);
-        ImageView clearBtn = view.findViewById(R.id.clearBtn);
-        ImageView convertBtn = view.findViewById(R.id.convertBtn);
-
-        clearBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                editText.setText("");
-            }
-        });
-
-        convertBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                InputConnection ic = getCurrentInputConnection();
-
-                int selectionStart = 0;
-                int selectionEnd = 0;
-
-                if(ic.getTextBeforeCursor(1000, 0) != null)
-                    selectionStart = ic.getTextBeforeCursor(1000, 0).length();
-
-                if(ic.getTextAfterCursor(1000, 0) != null)
-                    selectionEnd = ic.getTextAfterCursor(1000, 0).length();
-
-                String text = editText.getText().toString();
-
-                ic.deleteSurroundingText(selectionStart, selectionEnd);
-                ic.commitText(text.toUpperCase(), text.length());
-            }
-        });
-
-        return view;
-    }
+//    @SuppressLint("ResourceAsColor")
+//    @Override
+//    public View onCreateCandidatesView() {
+//        View view = getLayoutInflater().inflate(R.layout.candidate_layout, null);
+//        setCandidatesViewShown(true);
+//        setCandidatesView(view);
+//
+//        editText = view.findViewById(R.id.textView);
+//        ImageView clearBtn = view.findViewById(R.id.clearBtn);
+//        ImageView convertBtn = view.findViewById(R.id.convertBtn);
+//
+//        clearBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                editText.setText("");
+//            }
+//        });
+//
+//        convertBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                InputConnection ic = getCurrentInputConnection();
+//
+//                int selectionStart = 0;
+//                int selectionEnd = 0;
+//
+//                if(ic.getTextBeforeCursor(1000, 0) != null)
+//                    selectionStart = ic.getTextBeforeCursor(1000, 0).length();
+//
+//                if(ic.getTextAfterCursor(1000, 0) != null)
+//                    selectionEnd = ic.getTextAfterCursor(1000, 0).length();
+//
+//                String text = editText.getText().toString();
+//
+//                ic.deleteSurroundingText(selectionStart, selectionEnd);
+//                ic.commitText(text.toUpperCase(), text.length());
+//            }
+//        });
+//
+//        return view;
+//    }
 
     private void playClick(int keyCode){
         AudioManager am = (AudioManager)getSystemService(AUDIO_SERVICE);
@@ -178,7 +178,7 @@ public class MyKeyboard extends InputMethodService implements KeyboardView.OnKey
                 }
 
                 ic.commitText(String.valueOf(code),1);
-                ic.requestCursorUpdates(CURSOR_UPDATE_MONITOR);
+//                ic.requestCursorUpdates(CURSOR_UPDATE_MONITOR);
         }
 
         if(isShift){
@@ -188,21 +188,21 @@ public class MyKeyboard extends InputMethodService implements KeyboardView.OnKey
         }
     }
 
-    @Override
-    public void onUpdateCursorAnchorInfo(CursorAnchorInfo cursorAnchorInfo) {
-        InputConnection ic = getCurrentInputConnection();
-        String selectionStart = "";
-        String selectionEnd = "";
-
-        if(ic.getTextBeforeCursor(1000, 0) != null)
-            selectionStart = (String) ic.getTextBeforeCursor(1000, 0);
-
-        if(ic.getTextAfterCursor(1000, 0) != null)
-            selectionEnd = (String) ic.getTextAfterCursor(1000, 0);
-
-        String text = selectionStart + selectionEnd;
-        editText.setText(text);
-    }
+//    @Override
+//    public void onUpdateCursorAnchorInfo(CursorAnchorInfo cursorAnchorInfo) {
+//        InputConnection ic = getCurrentInputConnection();
+//        String selectionStart = "";
+//        String selectionEnd = "";
+//
+//        if(ic.getTextBeforeCursor(1000, 0) != null)
+//            selectionStart = (String) ic.getTextBeforeCursor(1000, 0);
+//
+//        if(ic.getTextAfterCursor(1000, 0) != null)
+//            selectionEnd = (String) ic.getTextAfterCursor(1000, 0);
+//
+//        String text = selectionStart + selectionEnd;
+//        editText.setText(text);
+//    }
 
     @Override
     public void onPress(int primaryCode) {
